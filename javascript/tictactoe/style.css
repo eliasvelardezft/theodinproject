@@ -1,0 +1,30 @@
+/* ********** Global section ********** */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ********** Settings section ********** */
+#settings {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ********** Gameboard section ********** */
+#gameboard-section {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  justify-content: center;
+
+}
+.square {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px;
+}
+
+
+/* ********** Results section ********** */

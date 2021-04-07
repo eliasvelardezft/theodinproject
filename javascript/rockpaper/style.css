@@ -1,0 +1,20 @@
+/* ********** general **********  */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+img {
+    height: 100px;
+}
+
+/* ********** player section **********  */
+#options {
+    display: flex;
+}
+
+
+
+/* ********** computer section **********  */
+
+/* ********** results section **********  */
