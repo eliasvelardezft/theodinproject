@@ -77,6 +77,12 @@ class Folder {
       `
   
       tableBody.innerHTML += item;
+
+
+    }
+    for (let i in this.books) {
+      let deleteBookBtn = document.getElementsByClassName('delete-book');
+      deleteBookBtn[i].addEventListener('click', () => {this.books.splice(i, 1); this.buildBookList();});
     }
   };
 
