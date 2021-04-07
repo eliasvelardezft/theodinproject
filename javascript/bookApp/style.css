@@ -1,0 +1,88 @@
+/* ************** Global Section ************** */
+body {
+  background-color: #F8EDEB;
+  display: flex;
+}
+/* ************** Folder List Section ************** */
+.folder-section {
+  position: relative;
+  top: 20px;
+  margin: 0;
+}
+.folder-flex-wrapper {
+  display: flex;
+}
+.folder-wrapper {
+  display: flex;
+  align-items: center;
+}
+.folder-form-wrapper {
+  display: flex;
+  align-items: center;
+}
+.folder-form-title {
+  height: 30px;
+  align-self: center;
+  margin: 10px;
+  margin-right: 30px;
+}
+.view-items {
+  height: 30px;
+  width: 90px;
+  margin: 10px;
+}
+.delete-folder {
+  height: 30px;
+  margin: 10px;
+}
+#folder-submit {
+  padding: 0 12px;
+  border: 1px solid black;
+  height: 30px;
+  margin: 10px;
+  margin-left: 30px;
+}
+#folder-container {
+  width: 350px;
+  border: 1px solid red;
+}
+/* ************** Book List Section ************** */
+#book-container {
+  border: 1px solid red;
+  width: 400px;
+  margin: 20px;
+}
+#flex-wrapper {
+  display: grid;
+
+  justify-items: center;
+  align-items: center;
+
+  grid-template: 
+    'title title'
+    'author genre'
+    'pages checkbox'
+    'submit submit';
+}
+
+#book-title-area {
+  grid-area: title;
+}
+#book-author-area {
+  grid-area: author;
+}
+#book-genre-area {
+  grid-area: genre;
+}
+#book-pages-area {
+  grid-area: pages;
+}
+#book-checkbox-area {
+  grid-area: checkbox;
+}
+#book-submit-area {
+  grid-area: submit;
+
+}
+
+
