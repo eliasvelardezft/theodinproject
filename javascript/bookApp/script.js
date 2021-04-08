@@ -1,8 +1,7 @@
 class Folder {
-  constructor(title) {
+  constructor(title, books=[]) {
     this.title = title;
-    this.bookCount = 0;
-    this.books = [];
+    this.books = books;
   };
 
   addBook(book) {
@@ -10,11 +9,11 @@ class Folder {
     console.log(`book ${book.title} added to folder ${this.title}`);
   };
 
-  deleteFolder() {
-    let i = Main.folderArr.map(function(f) {return f.title}).indexOf(this.title);
+  deleteFolder(i) {
     Main.folderArr.splice(i, 1);
+    localStorage.setItem('folderArr', JSON.stringify(Main.folderArr));
     console.log(`${this.title} deleted!`);
-    console.log(Main.folderArr);
+    console.log("Main.folderArr after deleting", Main.folderArr);
     Main.buildFolderList();
     if (Main.activeFolder === this) {
       let section = document.getElementById('book-list-section');
@@ -132,7 +131,6 @@ class Folder {
   
     let checkbox = document.getElementById('book-checkbox');
     let wasRead = checkbox.checked;
-    console.log(`${wasRead} before addeventlistener`);
     checkbox.addEventListener('click', function() {
       wasRead = checkbox.checked;
       console.log(`${wasRead} after addeventlistener`);
@@ -178,11 +176,10 @@ class Book {
   };
 }
 
-
-
 const Main = (() => {
 
-  let folderArr = [];
+  let folderArr = JSON.parse(localStorage.getItem('folderArr'));
+  console.log("HOLAAAA", folderArr);
   let activeFolder; 
 
   const start = () => {
@@ -197,14 +194,31 @@ const Main = (() => {
     
       let folder = new Folder(title);
       folderArr.push(folder);
+      console.log("a ver folderArr: ", folderArr);
+      localStorage.setItem('folderArr', JSON.stringify(folderArr));
+
       buildFolderList();
-    
     })
-    
+    console.log("***************\na ver recarga: ", folderArr);
     buildFolderList();
+
   }
 
+  
+
   const buildFolderList = () => {
+    console.log("SHOULDN'T BE EMPTY (folderArr)", folderArr);
+    folderArr = [];
+    let localFolders = JSON.parse(localStorage.getItem('folderArr'));
+    console.log("local folders: ",localFolders);
+    for (let i in localFolders) {
+      let folder = new Folder(localFolders[i].title, localFolders[i].books);
+      folderArr.push(folder);
+      console.log("nuevo", folderArr);
+      console.log("localFolder: ", localFolders[i]);
+      console.log("folder: ", folder);
+    }
+    console.log("folderArr: ", folderArr, "\n*************")
 
     let wrapper = document.getElementById('folder-list-wrapper');
     wrapper.innerHTML = '';
@@ -236,7 +250,7 @@ const Main = (() => {
         folderArr[i].viewFolderItems();
       });
       deleteFolderBtn.addEventListener('click', () => {
-        folderArr[i].deleteFolder();
+        folderArr[i].deleteFolder(i);
       });
   
     }
@@ -252,3 +266,5 @@ const Main = (() => {
 })();
 
 Main.start();
+
+
