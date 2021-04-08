@@ -176,13 +176,12 @@ class Book {
   };
 }
 
-const Main = (() => {
-
-  let folderArr = JSON.parse(localStorage.getItem('folderArr'));
-  console.log("HOLAAAA", folderArr);
-  let activeFolder; 
-
-  const start = () => {
+class Principal {
+  constructor() {
+    this.folderArr = JSON.parse(localStorage.getItem('folderArr'));
+    this.activeFolder; 
+  }
+  start() {
     let folderForm = document.getElementById('folder-form');
     folderForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -193,41 +192,38 @@ const Main = (() => {
       console.log(`folder '${title}' submited!`);
     
       let folder = new Folder(title);
-      folderArr.push(folder);
-      console.log("a ver folderArr: ", folderArr);
-      localStorage.setItem('folderArr', JSON.stringify(folderArr));
+      Main.folderArr.push(folder);
+      console.log("a ver folderArr: ", Main.folderArr);
+      localStorage.setItem('folderArr', JSON.stringify(Main.folderArr));
 
-      buildFolderList();
+      Main.buildFolderList();
     })
-    console.log("***************\na ver recarga: ", folderArr);
-    buildFolderList();
+    console.log("***************\na ver recarga: ", Main.folderArr);
+    Main.buildFolderList();
+  };
 
-  }
-
-  
-
-  const buildFolderList = () => {
-    console.log("SHOULDN'T BE EMPTY (folderArr)", folderArr);
-    folderArr = [];
+  buildFolderList() {
+    console.log("SHOULDN'T BE EMPTY (folderArr)", Main.folderArr);
+    Main.folderArr = [];
     let localFolders = JSON.parse(localStorage.getItem('folderArr'));
     console.log("local folders: ",localFolders);
     for (let i in localFolders) {
       let folder = new Folder(localFolders[i].title, localFolders[i].books);
-      folderArr.push(folder);
-      console.log("nuevo", folderArr);
+      Main.folderArr.push(folder);
+      console.log("nuevo", Main.folderArr);
       console.log("localFolder: ", localFolders[i]);
-      console.log("folder: ", folder);
+      console.log("folder: ", this.folder);
     }
-    console.log("folderArr: ", folderArr, "\n*************")
+    console.log("folderArr: ", Main.folderArr, "\n*************")
 
     let wrapper = document.getElementById('folder-list-wrapper');
     wrapper.innerHTML = '';
   
-    for (let i in folderArr) {
+    for (let i in Main.folderArr) {
       let item = `
         <div id='folder-row-${i}' class='folder-flex-wrapper folder-wrapper'>
           <div style='flex:7' class='folder-title'>
-            ${folderArr[i].title}
+            ${Main.folderArr[i].title}
           </div>
           <div style='flex:1'>
             <button class='btn btn-sm btn-outline-info view-items'>View items</button>
@@ -241,30 +237,24 @@ const Main = (() => {
       wrapper.innerHTML += item
     }
   
-    for (let i in folderArr) {
+    for (let i in Main.folderArr) {
   
       let viewBooksBtn = document.getElementsByClassName('view-items')[i]
       let deleteFolderBtn = document.getElementsByClassName('delete-folder')[i]
   
       viewBooksBtn.addEventListener('click', () => {
-        folderArr[i].viewFolderItems();
+        Main.folderArr[i].viewFolderItems();
       });
       deleteFolderBtn.addEventListener('click', () => {
-        folderArr[i].deleteFolder(i);
+        Main.folderArr[i].deleteFolder(i);
       });
   
     }
   
-  }
-
-  return {
-    buildFolderList,
-    start,
-    activeFolder,
-    folderArr,
   };
-})();
+}
 
+let Main = new Principal();
 Main.start();
 
 
